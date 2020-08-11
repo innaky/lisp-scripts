@@ -38,6 +38,20 @@ Add a watermark over many images in a pool of directories.
     *- - directory_X/       |
 ```
 
+* Reemplaza estas variables por tus rutas:
+
+** *water* corresponde a la ruta absoluta de la marca de agua.
+
+** *external-dir* Un directorio que aún no existe en tu /home/user
+
+
+```lisp
+(defparameter *water* "/home/innaky/water.png")
+(defparameter *external-dir* "/home/innaky/output-dir/")
+```
+
+* Leer el script y ejecutar:
+
 ```lisp
 CL-USER > (load "/home/innaky/src/lisp-scripts/composite.lisp")
 CL-USER > (composite-run
@@ -79,6 +93,19 @@ ejemplo revisar el siguiente repositorio [my-busybox-cl](https://github.com/inna
     |- - some file X
     *- - directory_X/       |
 ```
+
+* Replace this variables for your paths:
+
+```lisp
+(defparameter *water* "/home/innaky/water.png")
+(defparameter *external-dir* "/home/innaky/output-dir/")
+```
+
+* Read the script and run:
+
+** *water* It's the absolute path of the watermark.
+
+** *external-dir* It's a directory in your /home/user, not exists before run the script.
 
 ```lisp
 CL-USER > (load "/home/innaky/src/lisp-scripts/composite.lisp")
