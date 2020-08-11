@@ -1,5 +1,5 @@
 (defparameter *water* "/home/innaky/water.png")
-(defparameter *external-dir* "/home/innaky/external-dir/")
+(defparameter *external-dir* "/home/innaky/output-dir/")
 
 (defmacro cc-s (&rest strs)
   "Simple macro for concatenate strings."
@@ -28,12 +28,7 @@ https://github.com/fare/inferior-shell#exported-functionality"
 
 (defun only-paths (lst-true-paths)
   "Filter the true paths, return a list of directories true paths."
-  (if (equal nil lst-true-paths)
-      nil 
-      (if (directory-p (car lst-true-paths))
-	  (cons (car lst-true-paths)
-		(only-paths (cdr lst-true-paths)))
-	  (only-paths (cdr lst-true-paths)))))
+  (remove-if-not #'directory-p lst-true-paths))
 
 (defun get-insides (lst-directory-str-path)
   "List the files inside of the second directories level."
@@ -70,10 +65,9 @@ https://github.com/fare/inferior-shell#exported-functionality"
 (defun small-composite (str-filepath)
   "Make the external directory for save the transformated images and run `composite' for
 the file."
-  (progn
     (make-base-dir str-filepath)
     (gnu "composite" *water* str-filepath
-	 (out-file-generator str-filepath))))
+	 (out-file-generator str-filepath)))
 
 (defun lst-composite-run (lst-str-paths)
   "Apply `composite' over a list of files of a directory."
