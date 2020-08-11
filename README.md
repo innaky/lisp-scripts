@@ -19,7 +19,8 @@ Add a watermark over many images in a pool of directories.
 * Usar un transformador de imágenes por línea de comandos.
 * Rápido y portable en sistemas "Unix-like"
 * Ejemplo de árbol de directorios y archivos:
-  *- - Father directory
+``` 
+  *- - Father directory 
     |- - some_file0
     |- - some_file1
     *- - directory_one/     _
@@ -29,12 +30,13 @@ Add a watermark over many images in a pool of directories.
        | - - imageX.png     |
     *- - directory_two/     _
        | - - image1.png     |
-       | ...                |   Mix
+       | ...                |   Mix with a watermark
        | - - imageX.png     |
     *- - directory_three/   _
     |- - some file 2
     |- - some file X
-    *- - directory_X/
+    *- - directory_X/       |
+```
 
 ```lisp
 CL-USER > (load "/home/innaky/src/lisp-scripts/composite.lisp")
@@ -58,7 +60,9 @@ ejemplo revisar el siguiente repositorio [my-busybox-cl](https://github.com/inna
 * Create a mirror of the directory tree, but with the image mixed.
 * Use cli command, speed and portable over Unix-like.
 * Example tree:
-  *- - Father directory
+
+``` 
+  *- - Father directory 
     |- - some_file0
     |- - some_file1
     *- - directory_one/     _
@@ -68,12 +72,13 @@ ejemplo revisar el siguiente repositorio [my-busybox-cl](https://github.com/inna
        | - - imageX.png     |
     *- - directory_two/     _
        | - - image1.png     |
-       | ...                |   Mix
+       | ...                |   Mix with a watermark
        | - - imageX.png     |
     *- - directory_three/   _
     |- - some file 2
     |- - some file X
-    *- - directory_X/
+    *- - directory_X/       |
+```
 
 ```lisp
 CL-USER > (load "/home/innaky/src/lisp-scripts/composite.lisp")
