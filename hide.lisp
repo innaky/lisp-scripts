@@ -46,7 +46,8 @@
 		  (cl-ppcre:split "/" one-file-path)))))))
 
 (defun transformation-not-mv (one-file-path)
-  (let ((random-name (concatenate 'string "/" (random-string))))
+  (let ((random-name (concatenate 'string (concatenate-elems-of-lst (base-path one-file-path))
+				  "/" (random-string))))
     (cons one-file-path
 	  (cons (concatenate 'string random-name) nil))))
 
@@ -64,7 +65,7 @@
 			  :if-does-not-exist :create
 			  :if-exists :supersede)
     (format stream "~A~%" (mapcar #'(lambda (one-file-path)
-				      (transformation-not-mv one-file-path))
+				      (transformation-not-mv (namestring one-file-path)))
 				  (cl-fad:list-directory directory-to-hide)))))
 
 (defun hide (db-file directory-to-hide)
