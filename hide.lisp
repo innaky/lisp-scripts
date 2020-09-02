@@ -32,22 +32,30 @@
 		      (concatenate 'string "/" elem))
 		  (cl-ppcre:split "/" one-file-path)))))))
 
-(defun transformation-file (one-file-path)
-  "This function return a list with the absolute path of `one-file-path' and with the absolute path
-of the new name, and rename the `one-file-path' to the new name."
-  (let ((random-name (concatenate 'string (concatenate-elems-of-lst (base-path one-file-path))
-				  "/" (random-string))))
-    (cons one-file-path
-	  (cons random-name nil))
-    (rename-file one-file-path random-name)))
-
 (defun hide (db-file directory-to-hide)
-  "Save a `db-file' in a path and change the name of the directory `directory-to-hide'."
   (with-open-file (stream db-file
 			  :direction :output
 			  :if-does-not-exist :create
 			  :if-exists :supersede)
-    (format stream "~A~%" (mapcar #'(lambda (one-file-path)
-				      (transformation-file (namestring one-file-path)))
-				  (cl-fad:list-directory directory-to-hide)))))
+    (mapc #'(lambda (one-file-path)
+		(let ((random-name (concatenate 'string (concatenate-elems-of-lst
+							 (base-path (namestring one-file-path)))
+						"/" (random-string))))
+		  (format stream "~A~%" (concatenate 'string
+						     (namestring one-file-path) " " random-name))
+		  (rename-file one-file-path random-name)))
+	    (cl-fad:list-directory directory-to-hide))))
 
+(defparameter *files* nil)
+
+(defun charge (db-file)
+  (with-open-file (stream db-file)
+    (when stream
+      (loop for line = (read-line stream nil)
+	 while line do (push line *files*)))))
+
+(defun unhide ()
+  (mapcar #'(lambda (line)
+	      (let ((line-file (cl-ppcre:split " " line)))
+		(rename-file (cadr line-file) (car line-file))))
+	  *files*))
